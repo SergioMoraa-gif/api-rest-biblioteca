@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Préstamos')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('prestamos')}"></nav>
+
+<main class="container pb-5">
+    <header class="page-header d-flex justify-content-between align-items-end mb-4 pb-3">
+        <div>
+            <p class="text-uppercase small mb-1 text-secondary">Circulación</p>
+            <h1 class="h2 mb-0">Préstamos</h1>
+        </div>
+        <div class="btn-group btn-group-sm">
+            <a class="btn btn-outline-secondary" th:classappend="${estadoFiltro == null} ? 'active'" th:href="@{/vista/prestamos}">Todos</a>
+            <a class="btn btn-outline-secondary" th:classappend="${estadoFiltro?.name() == 'ACTIVO'} ? 'active'" th:href="@{/vista/prestamos(estado='ACTIVO')}">Activos</a>
+            <a class="btn btn-outline-secondary" th:classappend="${estadoFiltro?.name() == 'DEVUELTO'} ? 'active'" th:href="@{/vista/prestamos(estado='DEVUELTO')}">Devueltos</a>
+        </div>
+    </header>
+
+    <div th:replace="~{fragments/layout :: alertas}"></div>
+
+    <div class="row g-4">
+        <section class="col-lg-4">
+            <div class="panel p-4">
+                <h2 class="h5 mb-3">Registrar préstamo</h2>
+                <form th:action="@{/vista/prestamos/prestar}" th:object="${solicitud}" method="post" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label" for="clienteId">Cliente</label>
+                        <select id="clienteId" class="form-select" th:field="*{clienteId}" th:errorclass="is-invalid">
+                            <option value="">-- Selecciona --</option>
+                            <option th:each="c : ${clientes}" th:value="${c.id}" th:text="${c.nombreCompleto}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:errors="*{clienteId}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="libroId">Libro disponible</label>
+                        <select id="libroId" class="form-select" th:field="*{libroId}" th:errorclass="is-invalid">
+                            <option value="">-- Selecciona --</option>
+                            <option th:each="l : ${librosDisponibles}" th:value="${l.id}"
+                                    th:text="${l.titulo} + ' (' + ${l.numEjemplares} + ' disp.)'"></option>
+                        </select>
+                        <div class="invalid-feedback" th:errors="*{libroId}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="dias">Días de préstamo</label>
+                        <input id="dias" type="number" min="1" max="30" class="form-control" th:field="*{dias}" th:errorclass="is-invalid">
+                        <div class="invalid-feedback" th:errors="*{dias}"></div>
+                    </div>
+                    <p class="small text-secondary">La fecha de préstamo es hoy; la fecha límite se calcula con los días.</p>
+                    <button class="btn btn-primary w-100" type="submit">Prestar</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="col-lg-8">
+            <div class="panel p-3 p-md-4">
+                <h2 class="h5 mb-3">Historial</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr><th>ID</th><th>Cliente</th><th>Libro</th><th>Préstamo</th><th>Límite</th><th>Estado</th><th class="text-end">Acción</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="p : ${prestamos}">
+                                <td th:text="${p.id}"></td>
+                                <td th:text="${p.cliente.nombreCompleto}"></td>
+                                <td th:text="${p.libro.titulo}"></td>
+                                <td th:text="${p.fechaPrestamo}"></td>
+                                <td th:text="${p.fechaLimite}"></td>
+                                <td>
+                                    <span th:if="${p.estado.name() == 'DEVUELTO'}" class="badge text-bg-secondary"
+                                          th:text="'Devuelto ' + ${p.fechaDevolucion}"></span>
+                                    <span th:if="${p.vencido}" class="badge text-bg-danger">Vencido</span>
+                                    <span th:if="${p.estado.name() == 'ACTIVO' and !p.vencido}" class="badge text-bg-success">Activo</span>
+                                </td>
+                                <td class="text-end text-nowrap">
+                                    <form th:if="${p.estado.name() == 'ACTIVO'}" class="d-inline"
+                                          th:action="@{/vista/prestamos/devolver/{id}(id=${p.id})}" method="post">
+                                        <button class="btn btn-outline-primary btn-sm" type="submit">Devolver</button>
+                                    </form>
+                                    <form th:if="${p.estado.name() == 'DEVUELTO'}" class="d-inline"
+                                          th:action="@{/vista/prestamos/eliminar/{id}(id=${p.id})}" method="post"
+                                          onsubmit="return confirm('¿Eliminar este registro del historial?')">
+                                        <button class="btn btn-outline-danger btn-sm" type="submit">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(prestamos)}">
+                                <td colspan="7" class="text-center text-secondary py-4">No hay préstamos para mostrar.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

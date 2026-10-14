@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Libros')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('libros')}"></nav>
+
+<main class="container pb-5">
+    <header class="page-header d-flex justify-content-between align-items-end mb-4 pb-3">
+        <div>
+            <p class="text-uppercase small mb-1 text-secondary">Catálogo</p>
+            <h1 class="h2 mb-0">Libros</h1>
+        </div>
+        <span class="badge text-bg-light border" th:text="${#lists.size(libros)} + ' registrados'">0 registrados</span>
+    </header>
+
+    <div th:replace="~{fragments/layout :: alertas}"></div>
+
+    <div class="row g-4">
+        <section class="col-lg-4">
+            <div class="panel p-4">
+                <h2 class="h5 mb-3" th:text="${libro.id == null} ? 'Registrar libro' : 'Editar libro'">Registrar libro</h2>
+                <form th:action="@{/vista/libros/guardar}" th:object="${libro}" method="post" novalidate>
+                    <input type="hidden" th:field="*{id}">
+                    <div class="mb-3">
+                        <label class="form-label" for="isbn">ISBN</label>
+                        <input id="isbn" class="form-control" th:field="*{isbn}" th:errorclass="is-invalid" placeholder="978-607-07-1234-5">
+                        <div class="invalid-feedback" th:errors="*{isbn}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="titulo">Título</label>
+                        <input id="titulo" class="form-control" th:field="*{titulo}" th:errorclass="is-invalid">
+                        <div class="invalid-feedback" th:errors="*{titulo}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="autor">Autor</label>
+                        <input id="autor" class="form-control" th:field="*{autor}" th:errorclass="is-invalid">
+                        <div class="invalid-feedback" th:errors="*{autor}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="editorial">Editorial</label>
+                        <input id="editorial" class="form-control" th:field="*{editorial}" th:errorclass="is-invalid">
+                        <div class="invalid-feedback" th:errors="*{editorial}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="anioPublicacion">Año</label>
+                            <input id="anioPublicacion" type="number" class="form-control" th:field="*{anioPublicacion}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:errors="*{anioPublicacion}"></div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label" for="numEjemplares">Ejemplares</label>
+                            <input id="numEjemplares" type="number" min="0" class="form-control" th:field="*{numEjemplares}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:errors="*{numEjemplares}"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit" th:text="${libro.id == null} ? 'Guardar libro' : 'Guardar cambios'">Guardar libro</button>
+                    <a th:if="${libro.id != null}" class="btn btn-light w-100 mt-2" th:href="@{/vista/libros}">Cancelar</a>
+                </form>
+            </div>
+        </section>
+
+        <section class="col-lg-8">
+            <div class="panel p-3 p-md-4">
+                <div class="d-flex justify-content-between align-items-center mb-3 gap-2">
+                    <h2 class="h5 mb-0">Catálogo</h2>
+                    <input id="buscador" class="form-control form-control-sm w-auto" type="search" placeholder="Buscar título, autor o ISBN">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0" id="tabla">
+                        <thead>
+                            <tr><th>ISBN</th><th>Título</th><th>Autor</th><th>Año</th><th>Disponibles</th><th class="text-end">Acciones</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item : ${libros}">
+                                <td th:text="${item.isbn}"></td>
+                                <td>
+                                    <span th:text="${item.titulo}"></span>
+                                    <div class="small text-secondary" th:text="${item.editorial}"></div>
+                                </td>
+                                <td th:text="${item.autor}"></td>
+                                <td th:text="${item.anioPublicacion}"></td>
+                                <td>
+                                    <span class="badge" th:classappend="${item.numEjemplares > 0} ? 'text-bg-success' : 'text-bg-secondary'"
+                                          th:text="${item.numEjemplares}"></span>
+                                </td>
+                                <td class="text-end text-nowrap">
+                                    <a class="btn btn-outline-primary btn-sm" th:href="@{/vista/libros/editar/{id}(id=${item.id})}">Editar</a>
+                                    <form class="d-inline" th:action="@{/vista/libros/eliminar/{id}(id=${item.id})}" method="post"
+                                          onsubmit="return confirm('¿Eliminar este libro?')">
+                                        <button class="btn btn-outline-danger btn-sm" type="submit">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(libros)}">
+                                <td colspan="6" class="text-center text-secondary py-4">No hay libros registrados.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div th:replace="~{fragments/layout :: scripts}"></div>
+<script>
+    document.getElementById('buscador').addEventListener('input', function () {
+        const q = this.value.toLowerCase();
+        document.querySelectorAll('#tabla tbody tr').forEach(function (fila) {
+            fila.style.display = fila.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+    });
+</script>
+</body>
+</html>

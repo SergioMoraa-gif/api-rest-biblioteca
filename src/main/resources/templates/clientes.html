@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Clientes')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('clientes')}"></nav>
+
+<main class="container pb-5">
+    <header class="page-header d-flex justify-content-between align-items-end mb-4 pb-3">
+        <div>
+            <p class="text-uppercase small mb-1 text-secondary">Socios</p>
+            <h1 class="h2 mb-0">Clientes</h1>
+        </div>
+        <span class="badge text-bg-light border" th:text="${#lists.size(clientes)} + ' registrados'">0 registrados</span>
+    </header>
+
+    <div th:replace="~{fragments/layout :: alertas}"></div>
+
+    <div class="row g-4">
+        <section class="col-lg-4">
+            <div class="panel p-4">
+                <h2 class="h5 mb-3" th:text="${cliente.id == null} ? 'Registrar cliente' : 'Editar cliente'">Registrar cliente</h2>
+                <form th:action="@{/vista/clientes/guardar}" th:object="${cliente}" method="post" novalidate>
+                    <input type="hidden" th:field="*{id}">
+                    <div class="mb-3">
+                        <label class="form-label" for="nombre">Nombre</label>
+                        <input id="nombre" class="form-control" th:field="*{nombre}" th:errorclass="is-invalid">
+                        <div class="invalid-feedback" th:errors="*{nombre}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="apellidos">Apellidos</label>
+                        <input id="apellidos" class="form-control" th:field="*{apellidos}" th:errorclass="is-invalid">
+                        <div class="invalid-feedback" th:errors="*{apellidos}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="correoElectronico">Correo electrónico</label>
+                        <input id="correoElectronico" type="email" class="form-control" th:field="*{correoElectronico}" th:errorclass="is-invalid">
+                        <div class="invalid-feedback" th:errors="*{correoElectronico}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="telefono">Teléfono</label>
+                        <input id="telefono" class="form-control" th:field="*{telefono}" th:errorclass="is-invalid" placeholder="10 dígitos">
+                        <div class="invalid-feedback" th:errors="*{telefono}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="direccion">Dirección</label>
+                        <input id="direccion" class="form-control" th:field="*{direccion}" th:errorclass="is-invalid">
+                        <div class="invalid-feedback" th:errors="*{direccion}"></div>
+                    </div>
+                    <button class="btn btn-primary w-100" type="submit" th:text="${cliente.id == null} ? 'Guardar cliente' : 'Guardar cambios'">Guardar cliente</button>
+                    <a th:if="${cliente.id != null}" class="btn btn-light w-100 mt-2" th:href="@{/vista/clientes}">Cancelar</a>
+                </form>
+            </div>
+        </section>
+
+        <section class="col-lg-8">
+            <div class="panel p-3 p-md-4">
+                <h2 class="h5 mb-3">Listado</h2>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Registro</th><th class="text-end">Acciones</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="c : ${clientes}">
+                                <td th:text="${c.id}"></td>
+                                <td th:text="${c.nombreCompleto}"></td>
+                                <td th:text="${c.correoElectronico}"></td>
+                                <td th:text="${c.telefono}"></td>
+                                <td th:text="${c.fechaRegistro}"></td>
+                                <td class="text-end text-nowrap">
+                                    <a class="btn btn-outline-primary btn-sm" th:href="@{/vista/clientes/editar/{id}(id=${c.id})}">Editar</a>
+                                    <form class="d-inline" th:action="@{/vista/clientes/eliminar/{id}(id=${c.id})}" method="post"
+                                          onsubmit="return confirm('¿Eliminar este cliente?')">
+                                        <button class="btn btn-outline-danger btn-sm" type="submit">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(clientes)}">
+                                <td colspan="6" class="text-center text-secondary py-4">No hay clientes registrados.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

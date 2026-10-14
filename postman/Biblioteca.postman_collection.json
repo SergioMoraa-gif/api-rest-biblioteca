@@ -1,0 +1,969 @@
+{
+  "info": {
+    "name": "Biblioteca API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Pruebas de la API REST de Biblioteca. Ejecuta las peticiones en orden."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:1500"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Libros",
+      "item": [
+        {
+          "name": "Crear libro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isbn\": \"978-607-07-3456-1\",\n  \"titulo\": \"Cien años de soledad\",\n  \"autor\": \"Gabriel García Márquez\",\n  \"editorial\": \"Diana\",\n  \"anioPublicacion\": 1967,\n  \"numEjemplares\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Crear segundo libro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isbn\": \"978-84-376-0494-7\",\n  \"titulo\": \"Pedro Páramo\",\n  \"autor\": \"Juan Rulfo\",\n  \"editorial\": \"Cátedra\",\n  \"anioPublicacion\": 1955,\n  \"numEjemplares\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Listar libros",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Buscar por título",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros?titulo=soledad",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros"
+              ],
+              "query": [
+                {
+                  "key": "titulo",
+                  "value": "soledad"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Buscar por autor",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros?autor=rulfo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros"
+              ],
+              "query": [
+                {
+                  "key": "autor",
+                  "value": "rulfo"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Libros disponibles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros/disponibles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros",
+                "disponibles"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Obtener por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros",
+                "1"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Obtener por ISBN",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros/isbn/978-84-376-0494-7",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros",
+                "isbn",
+                "978-84-376-0494-7"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Actualizar libro",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros",
+                "1"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isbn\": \"978-607-07-3456-1\",\n  \"titulo\": \"Cien años de soledad\",\n  \"autor\": \"Gabriel García Márquez\",\n  \"editorial\": \"Diana\",\n  \"anioPublicacion\": 1967,\n  \"numEjemplares\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Clientes",
+      "item": [
+        {
+          "name": "Crear cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellidos\": \"López Ruiz\",\n  \"correoElectronico\": \"ana.lopez@correo.com\",\n  \"telefono\": \"2291234567\",\n  \"direccion\": \"Av. Independencia 100, Veracruz\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Crear segundo cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Luis\",\n  \"apellidos\": \"Hernández Díaz\",\n  \"correoElectronico\": \"luis.hdz@correo.com\",\n  \"telefono\": \"2297654321\",\n  \"direccion\": \"Calle 5 de Mayo 20, Boca del Río\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Listar clientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Obtener por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "1"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Buscar por correo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes/buscar?correo=ana.lopez@correo.com",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "buscar"
+              ],
+              "query": [
+                {
+                  "key": "correo",
+                  "value": "ana.lopez@correo.com"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Actualizar cliente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "1"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellidos\": \"López Ruiz\",\n  \"correoElectronico\": \"ana.lopez@correo.com\",\n  \"telefono\": \"2299876543\",\n  \"direccion\": \"Av. Independencia 100, Veracruz\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Préstamos",
+      "item": [
+        {
+          "name": "Prestar libro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos"
+              ]
+            },
+            "description": "Descuenta un ejemplar del libro 2",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": 1,\n  \"libroId\": 2,\n  \"dias\": 7\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Listar todos los préstamos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos"
+              ]
+            },
+            "description": "Lista todos los préstamos, activos y devueltos."
+          }
+        },
+        {
+          "name": "Listar préstamos activos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos?estado=ACTIVO",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "ACTIVO"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Obtener préstamo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos",
+                "1"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Préstamos del cliente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes/1/prestamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "1",
+                "prestamos"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Devolver libro",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos/1/devolucion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos",
+                "1",
+                "devolucion"
+              ]
+            },
+            "description": "Regresa el ejemplar al libro"
+          }
+        },
+        {
+          "name": "Listar préstamos devueltos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos?estado=DEVUELTO",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "DEVUELTO"
+                }
+              ]
+            },
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Errores y validaciones",
+      "item": [
+        {
+          "name": "400 - Libro con datos inválidos",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isbn\": \"abc\",\n  \"titulo\": \"\",\n  \"numEjemplares\": -1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "409 - ISBN duplicado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isbn\": \"978-607-07-3456-1\",\n  \"titulo\": \"Cien años de soledad\",\n  \"autor\": \"Gabriel García Márquez\",\n  \"editorial\": \"Diana\",\n  \"anioPublicacion\": 1967,\n  \"numEjemplares\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "409 - Correo duplicado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellidos\": \"López Ruiz\",\n  \"correoElectronico\": \"ana.lopez@correo.com\",\n  \"telefono\": \"2291234567\",\n  \"direccion\": \"Av. Independencia 100, Veracruz\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "400 - Correo inválido",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellidos\": \"López Ruiz\",\n  \"correoElectronico\": \"no-es-correo\",\n  \"telefono\": \"2291234567\",\n  \"direccion\": \"Av. Independencia 100, Veracruz\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "404 - Libro inexistente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros/999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros",
+                "999"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "400 - Id no numérico",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros/abc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros",
+                "abc"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Prestar libro 2 a cliente 1 (correcto, deja 0 ejemplares)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": 1,\n  \"libroId\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "409 - Préstamo duplicado del mismo cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": 1,\n  \"libroId\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "409 - Sin ejemplares disponibles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clienteId\": 2,\n  \"libroId\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "409 - Devolver préstamo ya devuelto",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos/1/devolucion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos",
+                "1",
+                "devolucion"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "409 - Eliminar libro con préstamos",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros",
+                "2"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "409 - Eliminar préstamo activo",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos",
+                "2"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "409 - Eliminar cliente con préstamos",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "1"
+              ]
+            },
+            "description": "Ana tiene préstamos registrados, así que no se puede eliminar."
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Eliminaciones",
+      "item": [
+        {
+          "name": "Eliminar préstamo devuelto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/prestamos/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "prestamos",
+                "1"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Eliminar libro sin préstamos",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/libros/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "libros",
+                "1"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Eliminar cliente sin préstamos",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/clientes/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "2"
+              ]
+            },
+            "description": "Luis no tiene préstamos: responde 204 No Content."
+          }
+        }
+      ]
+    }
+  ]
+}
